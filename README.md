@@ -15,4 +15,6 @@ UEditor 前台文件完全无修改,可自由gulp等工具部署到生产环境
  
  v0.1 First Release
 
+##License
+
 Laravel 5  UEditor is licensed under [The MIT License (MIT)](LICENSE).

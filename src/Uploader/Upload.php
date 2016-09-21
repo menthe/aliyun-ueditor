@@ -1,7 +1,8 @@
-<?php namespace Stevenyangecho\UEditor\Uploader;
+<?php 
+
+namespace Harris\UEditor\Uploader;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use App\Libs\YuuGames\FileUploadUtils;
 
 /**
  * Abstract Class Upload
@@ -23,6 +24,8 @@ abstract class Upload {
     protected $fileType; //文件类型
     protected $stateInfo; //上传状态信息,
     protected $stateMap; //上传状态映射表，国际化用户需考虑此处数据的国际化
+    
+    
     abstract function doUpload(); //抽象方法,上传核心方法
 
     public function __construct(array $config, $request) {
@@ -86,7 +89,7 @@ abstract class Upload {
      * 文件大小检测
      * @return bool
      */
-    protected function  checkSize() {
+    protected function checkSize() {
         return $this->fileSize <= ($this->config["maxSize"]);
     }
 
@@ -155,7 +158,7 @@ abstract class Upload {
     public function getFileInfo() {
         return array(
             "state" => $this->stateInfo,
-            "url" => FileUploadUtils::url($this->fullName, true),
+            "url" => config('ueditor.core.aliyun.url') . $this->fullName,
             "title" => $this->fileName,
             "original" => $this->oriName,
             "type" => $this->fileType,

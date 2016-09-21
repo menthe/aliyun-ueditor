@@ -23,13 +23,13 @@ return [
 
         'mode'=>'local',//上传方式,local 为本地   qiniu 为七牛
 
-        //七牛配置,若mode='qiniu',以下为必填.
+        //aliyun配置, 
         'aliyun'=>[
             'accessKeyId' => '',
             'accessKeySecret' => '',
             'bucket' => '',
-            'url' => 'http://xxx.clouddn.com',//七牛分配的CDN域名,注意带上http://
-
+            'url' => 'http://xxx.clouddn.com', //阿里云OSS的域名前缀
+            'upload_dir' => 'uploads/ueditor/'
         ]
     ],
 		

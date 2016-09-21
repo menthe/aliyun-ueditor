@@ -1,5 +1,5 @@
 <?php
-namespace Stevenyangecho\UEditor;
+namespace Harris\UEditor;
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;

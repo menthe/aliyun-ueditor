@@ -21,11 +21,12 @@
     "php": ">=5.4.0",
     "ext-fileinfo": "*",
     "illuminate/support": "5.*",
-    "johnlui/aliyun-oss": "^1.3"
+    "johnlui/aliyun-oss": "^1.3",
+    "nesbot/carbon": "^1.21"
   },
   "autoload": {
     "psr-4": {
-      "Menthe\\UEditor\\": "src/"
+      "Harris\\UEditor\\": "src/"
     }
   },
   "minimum-stability": "dev",

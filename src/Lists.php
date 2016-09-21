@@ -1,4 +1,6 @@
-<?php namespace Stevenyangecho\UEditor;
+<?php 
+
+namespace Harris\UEditor;
 
 
 class Lists {

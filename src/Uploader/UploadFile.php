@@ -1,7 +1,6 @@
 <?php namespace Stevenyangecho\UEditor\Uploader;
 
 use Stevenyangecho\UEditor\Uploader\Upload;
-use App\Libs\YuuGames\FileUploadUtils;
 
 /**
  *
@@ -14,6 +13,7 @@ use App\Libs\YuuGames\FileUploadUtils;
  */
 class UploadFile extends Upload{
     use UploadQiniu;
+    use UploadAliyunOss;
     public function doUpload() {
 
         $file = $this->request->file($this->fileField);
@@ -50,7 +50,7 @@ class UploadFile extends Upload{
 
         if(config('UEditorUpload.core.mode') == 'aliyun-oss'){
             try {
-            	$path = FileUploadUtils::doUpload($this->file, true);
+            	$path = $this->uploadFs($this->fullName, $this->file->getRealPath());
             	$this->fullName = $path;
                 $this->stateInfo = $this->stateMap[0];
 

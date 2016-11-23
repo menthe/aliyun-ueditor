@@ -2,6 +2,7 @@
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Libs\YuuGames\FileUploadUtils;
+use Stevenyangecho\UEditor\OSSUtils;
 
 /**
  * Abstract Class Upload
@@ -163,7 +164,7 @@ abstract class Upload {
     public function getFileInfo() {
         return array(
             "state" => $this->stateInfo,
-            "url" => FileUploadUtils::url($this->fullName, true),
+            "url" => OSSUtils::getUrl($this->fullName),
             "title" => $this->fileName,
             "original" => $this->oriName,
             "type" => $this->fileType,

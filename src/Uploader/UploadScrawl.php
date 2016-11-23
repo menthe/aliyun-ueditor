@@ -10,6 +10,7 @@ use Stevenyangecho\UEditor\Uploader\Upload;
 class UploadScrawl extends Upload
 {
     use UploadQiniu;
+    use UploadAliyunOss;
 
 
     public function doUpload()
@@ -61,6 +62,18 @@ class UploadScrawl extends Upload
                 $this->stateInfo = $this->stateMap[0];
                 return false;
             }
+
+        }else if(config('UEditorUpload.core.mode')=='aliyun-oss'){
+        	
+        	$upload = $this->uploadContent($this->fullName, $img);
+        	if($upload) {
+        		$this->fullName = $upload;
+        		$this->stateInfo = $this->stateMap[0];
+        		return true;
+        	}else {
+        		$this->stateInfo = $this->getStateInfo("ERROR_UNKNOWN_MODE");
+        		return false;
+        	}
 
         }else if(config('UEditorUpload.core.mode')=='qiniu'){
 

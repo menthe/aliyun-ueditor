@@ -1,6 +1,6 @@
-<?php namespace Stevenyangecho\UEditor\Uploader;
+<?php namespace Harris\UEditor\Uploader;
 
-use Stevenyangecho\UEditor\Uploader\Upload;
+use Harris\UEditor\Uploader\Upload;
 
 /**
  * Class UploadScrawl

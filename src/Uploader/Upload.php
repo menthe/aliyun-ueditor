@@ -3,7 +3,7 @@
 namespace Harris\UEditor\Uploader;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Stevenyangecho\UEditor\OSSUtils;
+use Harris\UEditor\OSSUtils;
 
 /**
  * Abstract Class Upload

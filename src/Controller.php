@@ -1,12 +1,12 @@
-<?php namespace Stevenyangecho\UEditor;
+<?php namespace Harris\UEditor;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
-use Stevenyangecho\UEditor\Uploader\UploadScrawl;
-use Stevenyangecho\UEditor\Uploader\UploadFile;
-use Stevenyangecho\UEditor\Uploader\UploadCatch;
-use Stevenyangecho\UEditor\OSSUtils;
+use Harris\UEditor\Uploader\UploadScrawl;
+use Harris\UEditor\Uploader\UploadFile;
+use Harris\UEditor\Uploader\UploadCatch;
+use Harris\UEditor\OSSUtils;
 
 class Controller extends BaseController {
 

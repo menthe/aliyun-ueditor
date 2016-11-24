@@ -3,7 +3,7 @@
 
 namespace Harris\UEditor\Uploader;
 
-use Stevenyangecho\UEditor\OSSUtils;
+use Harris\UEditor\OSSUtils;
 
 /**
  *

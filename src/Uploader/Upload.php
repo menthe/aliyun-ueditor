@@ -25,14 +25,13 @@ abstract class Upload {
     protected $stateMap; //上传状态映射表，国际化用户需考虑此处数据的国际化
     abstract function doUpload(); //抽象方法,上传核心方法
 
-    public function __construct(array $config, $request)
-    {
+    public function __construct(array $config, $request) {
         $this->config = $config;
         $this->request = $request;
         $this->fileField = $this->config['fieldName'];
         if(isset($config['allowFiles'])){
             $this->allowFiles=$config['allowFiles'];
-        }else{
+        } else {
             $this->allowFiles=[];
         }
 
@@ -68,8 +67,7 @@ abstract class Upload {
      * @return array
      */
 
-    public function upload()
-    {
+    public function upload() {
         $this->doUpload();
         return $this->getFileInfo();
     }
@@ -80,8 +78,7 @@ abstract class Upload {
      * @param $errCode
      * @return string
      */
-    protected function getStateInfo($errCode)
-    {
+    protected function getStateInfo($errCode) {
         return !$this->stateMap[$errCode] ? $this->stateMap["ERROR_UNKNOWN"] : $this->stateMap[$errCode];
     }
 
@@ -89,8 +86,7 @@ abstract class Upload {
      * 文件大小检测
      * @return bool
      */
-    protected function  checkSize()
-    {
+    protected function  checkSize() {
         return $this->fileSize <= ($this->config["maxSize"]);
     }
 
@@ -98,8 +94,7 @@ abstract class Upload {
      * 获取文件扩展名
      * @return string
      */
-    protected function getFileExt()
-    {
+    protected function getFileExt() {
         return '.' . $this->file->guessExtension();
     }
 
@@ -107,8 +102,7 @@ abstract class Upload {
      * 重命名文件
      * @return string
      */
-    protected function getFullName()
-    {
+    protected function getFullName() {
         //替换日期事件
         $t = time();
         $d = explode('-', date("Y-y-m-d-H-i-s"));
@@ -151,9 +145,7 @@ abstract class Upload {
      * 文件类型检测
      * @return bool
      */
-    protected function checkType()
-    {
-
+    protected function checkType() {
         return in_array($this->getFileExt(), $this->config["allowFiles"]);
     }
     /**
@@ -170,5 +162,4 @@ abstract class Upload {
             "size" => $this->fileSize
         );
     }
-
 }

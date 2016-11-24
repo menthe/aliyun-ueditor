@@ -1,19 +1,15 @@
 <?php namespace Stevenyangecho\UEditor;
 
 
-class Lists
-{
-    public function __construct($allowFiles, $listSize, $path, $request)
-    {
+class Lists {
+    public function __construct($allowFiles, $listSize, $path, $request) {
         $this->allowFiles = substr(str_replace(".", "|", join("", $allowFiles)), 1);
         $this->listSize = $listSize;
         $this->path = $path;
         $this->request = $request;
     }
 
-    public function getList()
-    {
-
+    public function getList() {
         $size = $this->request->get('size', $this->listSize);
         $start = $this->request->get('start', 0);
         $end = $start + $size;
@@ -53,8 +49,7 @@ class Lists
      * @param array $files
      * @return array
      */
-    protected function  getfiles($path, $allowFiles, &$files = array())
-    {
+    protected function getfiles($path, $allowFiles, &$files = array()) {
 
         if (!is_dir($path)) return null;
         if(substr($path, strlen($path) - 1) != '/') $path .= '/';

@@ -3,6 +3,7 @@
 namespace Harris\UEditor\Uploader;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Stevenyangecho\UEditor\OSSUtils;
 
 /**
  * Abstract Class Upload
@@ -158,7 +159,7 @@ abstract class Upload {
     public function getFileInfo() {
         return array(
             "state" => $this->stateInfo,
-            "url" => config('ueditor.core.aliyun.url') . $this->fullName,
+            "url" => OSSUtils::getUrl($this->fullName),
             "title" => $this->fileName,
             "original" => $this->oriName,
             "type" => $this->fileType,

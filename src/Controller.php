@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use Stevenyangecho\UEditor\Uploader\UploadScrawl;
 use Stevenyangecho\UEditor\Uploader\UploadFile;
 use Stevenyangecho\UEditor\Uploader\UploadCatch;
-use App\Libs\YuuGames\OSSUtils;
-use App\Libs\YuuGames\Constants;
+use Stevenyangecho\UEditor\OSSUtils;
 
 class Controller extends BaseController {
 
@@ -46,7 +45,6 @@ class Controller extends BaseController {
                     'fieldName' => $config['scrawlFieldName'],
                 );
                 $result = with(new UploadScrawl($upConfig, $request))->upload();
-
                 break;
             case 'uploadvideo':
                 $upConfig = array(
@@ -59,7 +57,6 @@ class Controller extends BaseController {
 
                 break;
             case 'uploadfile':
-            default:
                 $upConfig = array(
                     "pathFormat" => $config['filePathFormat'],
                     "maxSize" => $config['fileMaxSize'],
@@ -75,7 +72,7 @@ class Controller extends BaseController {
 
 
                 if (config('UEditorUpload.core.mode') == 'aliyun-oss') {
-                	$files = OSSUtils::getAllObjectUrls(Constants::getOSSBucket(), 'uploads/ueditor/');
+                	$files = OSSUtils::getAllObjectUrls(config('UEditorUpload.core.aliyun-oss.ossBucket'), $config['imageManagerListPath']);
                 	$result = [
                 		"state" => "SUCCESS",
                 		"list" => $files,
@@ -95,7 +92,13 @@ class Controller extends BaseController {
             /* 列出文件 */
             case 'listfile':
                 if (config('UEditorUpload.core.mode') == 'aliyun-oss') {
-                    $result = OSSUtils::getAllObjectUrls(Constants::getOSSBucket(), 'uploads/ueditor/');
+                    $files = OSSUtils::getAllObjectUrls(config('UEditorUpload.core.aliyun-oss.ossBucket'), $config['fileManagerListPath']);
+                    $result = [
+                    	"state" => "SUCCESS",
+                    	"list" => $files,
+                    	"start" => 0,
+                    	"total" => count($files)
+                    ];
                 } else if (config('UEditorUpload.core.mode') == 'qiniu') {
                     $result = with(new ListsQiniu(
                         $config['fileManagerAllowFiles'],

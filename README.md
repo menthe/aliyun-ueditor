@@ -19,25 +19,31 @@ UEditor 前台文件完全无修改,可自由gulp等工具部署到生产环境
 ##Installation
 * Run the command in your laravel project home.
 
-```composer require menthe/aliyun-ueditor -vvv
+```
+composer require menthe/aliyun-ueditor -vvv
+
 ```
 * Copy the provider line into your config/app.php
 
-```Harris\UEditor\UEditorServiceProvider::class,
+```
+Harris\UEditor\UEditorServiceProvider::class,
 ```
 * Then run the command.
 
-```php artisan vendor:publish
+```
+php artisan vendor:publish
 ```
 * Change the config file -> config/UEditorUpload.php
 
 * Include the line in the blade template file, like template.blade.php, and you have the ueditor static file included.
 
-```@include('ueditor::head');
+```
+@include('ueditor::head');
 ```
 * Init the ueditor in Javascript.
 
-```<!-- 加载编辑器的容器 -->
+```
+<!-- 加载编辑器的容器 -->
 <script id="container" name="content" type="text/plain">
     这里写你的初始化内容
 </script>

@@ -3,6 +3,7 @@
 namespace Harris\UEditor;
 
 use JohnLui\AliyunOSS\AliyunOSS;
+use Illuminate\Support\Facades\Config;
 
 class OSSUtils {
 	
@@ -48,8 +49,7 @@ class OSSUtils {
 	
 	public static function getUrl($ossKey) {
 		$oss = new OSSUtils();
-		$oss->ossClient->setBucket(config('UEditorUpload.core.aliyun-oss.ossBucket'));
-		return $oss->ossClient->getUrl($ossKey, new \DateTime ( "+1 day" ));
+		return Config::get('UEditorUpload.core.aliyun-oss.staticEndPoint') . $ossKey;
 	}
 	
 	public static function createBucket($bucketName) {

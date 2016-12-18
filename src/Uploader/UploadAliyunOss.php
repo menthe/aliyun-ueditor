@@ -23,7 +23,7 @@ trait UploadAliyunOss {
 		$oExt = substr ( strrchr ( $fullname, '.' ), 1 );
 		
 		$fullname = $left . md5 ( $name ) . '.' . $oExt;
-		OSSUtils::upload ( $fullname, $realpath );
+		OSSUtils::upload ($fullname, $realpath);
 		return $fullname;
 	}
 	public static function uploadContent($fullname, $content) {

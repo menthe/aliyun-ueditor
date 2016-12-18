@@ -1,18 +1,18 @@
-<?php namespace Stevenyangecho\UEditor\Uploader;
+<?php
 
-use Stevenyangecho\UEditor\Uploader\Upload;
+namespace Harris\UEditor\Uploader;
+
+use Harris\UEditor\Uploader\Upload;
 
 /**
  * Class UploadCatch
  * 图片远程抓取
- *
- * @package Stevenyangecho\UEditor\Uploader
  */
-class UploadCatch  extends Upload{
+class UploadCatch  extends Upload {
     use UploadQiniu;
+    use UploadAliyunOss;
 
-    public function doUpload()
-    {
+    public function doUpload() {
 
         $imgUrl = strtolower(str_replace("&amp;", "&", $this->config['imgUrl']));
         //http开头验证
@@ -58,17 +58,12 @@ class UploadCatch  extends Upload{
         $this->fileName =  basename($this->filePath);
         $dirname = dirname($this->filePath);
 
-
-
-
-
         //检查文件大小是否超出限制
         if (!$this->checkSize()) {
             $this->stateInfo = $this->getStateInfo("ERROR_SIZE_EXCEED");
             return false;
         }
-
-
+        
         if(config('UEditorUpload.core.mode')=='local'){
             //创建目录失败
             if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
@@ -87,6 +82,18 @@ class UploadCatch  extends Upload{
                 $this->stateInfo = $this->stateMap[0];
                 return true;
             }
+        }else if(config('UEditorUpload.core.mode')=='aliyun-oss'){
+
+        	$upload = $this->uploadContent($this->fullName, $img);
+        	if($upload) {
+        		$this->fullName = $upload;
+        		$this->stateInfo = $this->stateMap[0];
+        		return true;
+        	}else {
+        		$this->stateInfo = $this->getStateInfo("ERROR_UNKNOWN_MODE");
+        		return false;
+        	}
+
         }else if(config('UEditorUpload.core.mode')=='qiniu'){
 
             return $this->uploadQiniu($this->filePath,$img);
@@ -105,8 +112,7 @@ class UploadCatch  extends Upload{
      * 获取文件扩展名
      * @return string
      */
-    protected function getFileExt()
-    {
+    protected function getFileExt() {
         return strtolower(strrchr($this->oriName, '.'));
     }
 }

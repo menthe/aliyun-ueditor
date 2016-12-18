@@ -1,19 +1,17 @@
-<?php namespace Stevenyangecho\UEditor\Uploader;
+<?php
 
-use Stevenyangecho\UEditor\Uploader\Upload;
-use App\Libs\YuuGames\FileUploadUtils;
+namespace Harris\UEditor\Uploader;
+use Harris\UEditor\Uploader\Upload;
 
 /**
- *
- *
  * Class UploadFile
- *
  * 文件/图像普通上传
- *
- * @package Stevenyangecho\UEditor\Uploader
+ * @package Harris\UEditor\Uploader
  */
-class UploadFile extends Upload{
+class UploadFile extends Upload {
+	
     use UploadQiniu;
+    use UploadAliyunOss;
     public function doUpload() {
 
         $file = $this->request->file($this->fileField);
@@ -50,7 +48,7 @@ class UploadFile extends Upload{
 
         if(config('UEditorUpload.core.mode') == 'aliyun-oss'){
             try {
-            	$path = FileUploadUtils::doUpload($this->file, true);
+            	$path = $this->uploadFs($this->fullName, $this->file->getRealPath());
             	$this->fullName = $path;
                 $this->stateInfo = $this->stateMap[0];
 
@@ -58,14 +56,6 @@ class UploadFile extends Upload{
                 $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
                 return false;
             }
-
-        } else if(config('UEditorUpload.core.mode')=='qiniu'){
-            $content=file_get_contents($this->file->getPathname());
-            return $this->uploadQiniu($this->filePath,$content);
-        } else {
-            $this->stateInfo = $this->getStateInfo("ERROR_UNKNOWN_MODE");
-            return false;
         }
-        return true;
     }
 }

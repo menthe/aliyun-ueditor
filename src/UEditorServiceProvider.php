@@ -1,8 +1,10 @@
 <?php
-namespace Stevenyangecho\UEditor;
+namespace Harris\UEditor;
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\File;
 
 class UEditorServiceProvider extends RouteServiceProvider {
 	
@@ -20,16 +22,12 @@ class UEditorServiceProvider extends RouteServiceProvider {
 	 * @return void
 	 */
 	public function boot(Router $router) {
+		
 		parent::boot ($router);
 		$viewPath = realpath ( __DIR__ . '/../resources/views');
 		$this->loadViewsFrom ($viewPath, 'ueditor');
-		$this->publishes(
-				[realpath ( __DIR__ . '/../resources/views' ) => base_path ('resources/views/vendor/ueditor' )
-				], 'view');
-		$this->publishes (
-				[realpath ( __DIR__ . '/../resources/public' ) => public_path () . '/aliyun-ueditor' 
-				], 'assets' );
-		
+		$this->publishes([realpath ( __DIR__ . '/../resources/views' ) => base_path ('resources/views/vendor/ueditor')], 'view');
+		$this->publishes ([realpath ( __DIR__ . '/../resources/public' ) => public_path () . '/aliyun-ueditor'], 'assets' );
 		$this->loadTranslationsFrom(realpath ( __DIR__ . '/../resources/lang' ), 'ueditor');
 		
 		// 定义多语言
@@ -37,10 +35,10 @@ class UEditorServiceProvider extends RouteServiceProvider {
 		$locale = str_replace('_', '-', strtolower (config('app.locale')));
 		$file = "/aliyun-ueditor/lang/$locale/$locale.js";
 		$filePath = public_path() . $file;
-		if (! \File::exists ($filePath)) {
+		if (! File::exists ($filePath)) {
 			$file = "/laravel-u-editor/lang/zh-cn/zh-cn.js";
 		}
-		\View::share ( 'UeditorLangFile', $file );
+		View::share ('UeditorLangFile', $file );
 	}
 	
 	/**
@@ -50,12 +48,9 @@ class UEditorServiceProvider extends RouteServiceProvider {
 	 */
 	public function register() {
 		parent::register();
-		$configPath = realpath( __DIR__ . '/../config/ueditor.php');
-		$this->mergeConfigFrom($configPath, 'ueditor');
-		
-		$this->publishes(
-				[ $configPath => config_path ( 'UEditorUpload.php' ) 
-				], 'config' );
+		$configPath = realpath( __DIR__ . '/../config/UEditorUpload.php');
+		$this->mergeConfigFrom($configPath, 'UEditorUpload');
+		$this->publishes([ $configPath => config_path ('UEditorUpload.php' )], 'config' );
 	}
 	
 	/**
@@ -66,7 +61,7 @@ class UEditorServiceProvider extends RouteServiceProvider {
 	public function map() {
 		$router = app ('router');
 		// need add auth
-		$config = config ( 'ueditor.core.route', [ ] );
+		$config = config('UEditorUpload.core.route', [ ]);
 		$config ['namespace'] = __NAMESPACE__;
 		
 		// 定义路由

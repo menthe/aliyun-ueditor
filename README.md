@@ -60,6 +60,7 @@ php artisan vendor:publish
 ##ChangeLog
  
  v0.1 First Release, just use for myself.
+ 
  v0.1.1 正式发布，测试通过，完善文档。
  
 

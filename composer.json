@@ -1,6 +1,6 @@
 {
   "name": "menthe/aliyun-ueditor",
-  "description": "UEditor for laravel5. Support i18n. UEditor is a Rich Text Web Editor From Baidu.",
+  "description": "UEditor for laravel5 and Aliyun OSS.Store all images and files in Aliyun OSS. Support i18n. UEditor is a Rich Text Web Editor From Baidu.",
   "keywords": [
     "laravel",
     "ueditor",

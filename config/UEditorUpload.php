@@ -33,7 +33,7 @@ return [
             
         //阿里云配置,若mode='aliyun-oss',以下为必填.
         'aliyun-oss' => [
-            'staticEndPoint'=>'http://xxx.xxx.com/', //注意带上 http://和最后的 /
+            'staticEndPoint'=>'http://xxx.xxx.com/', //注意带上 http://和最后的 /,  这里填写我们在阿里云后台配置的自定义域名
             'ossBucket'=>'',
             'ossServer'=>'',
             'ossServerInternal'=>'',

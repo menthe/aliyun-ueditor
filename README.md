@@ -11,6 +11,10 @@ UEditor 前台文件完全无修改,可自由gulp等工具部署到生产环境
 
 支持本地和阿里云存储,默认为本地上传 public/uploads
 
+##Notice
+For Laravel5.1 LTS, please use v0.1.1.
+For Laravel5.3 or 5.4, please use v0.1.2.
+
 ##Requirement
 * Lavavel5.1 LTS, for Lavavel5.3, I do not test, you may have a try.
 * PHP5.6+, PHP7.0 is suitable
@@ -59,10 +63,9 @@ php artisan vendor:publish
 
 ##ChangeLog
  
- v0.1 First Release, just use for myself.
- 
- 
- v0.1.1 正式发布，测试通过，完善文档。
+ - v0.1 First Release, just use for myself.
+ - v0.1.1 正式发布，测试通过，完善文档。
+ - v0.1.2 匹配Laravel5.3和5.4
  
 
 

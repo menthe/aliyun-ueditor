@@ -21,7 +21,7 @@
     "php": ">=5.4.0",
     "ext-fileinfo": "*",
     "illuminate/support": "5.*",
-    "menthe/yuugames-aliyun-oss": "v0.1.0"
+    "menthe/yuugames-aliyun-oss": "dev-develop"
   },
   "autoload": {
     "psr-4": {

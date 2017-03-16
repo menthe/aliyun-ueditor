@@ -2,16 +2,14 @@
 
 namespace Harris\UEditor\Uploader;
 use Harris\UEditor\Uploader\Upload;
+use Harris\AliyunOSS\OSSUtils;
 
 /**
  * Class UploadFile
  * 文件/图像普通上传
- * @package Harris\UEditor\Uploader
  */
 class UploadFile extends Upload {
 	
-    use UploadQiniu;
-    use UploadAliyunOss;
     public function doUpload() {
 
         $file = $this->request->file($this->fileField);
@@ -48,7 +46,8 @@ class UploadFile extends Upload {
 
         if(config('UEditorUpload.core.mode') == 'aliyun-oss'){
             try {
-            	$path = $this->uploadFs($this->fullName, $this->file->getRealPath());
+            	$path = OSSUtils::doUploadFs($this->file->getRealPath());
+            	$path = config('fileuploads.aliyun-oss.ossPrefix') . $path;
             	$this->fullName = $path;
                 $this->stateInfo = $this->stateMap[0];
 

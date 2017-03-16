@@ -3,17 +3,16 @@
 namespace Harris\UEditor\Uploader;
 
 use Harris\UEditor\Uploader\Upload;
+use Harris\AliyunOSS\OSSUtils;
 
 /**
  * Class UploadCatch
  * 图片远程抓取
  */
 class UploadCatch  extends Upload {
-    use UploadQiniu;
-    use UploadAliyunOss;
 
     public function doUpload() {
-
+    	
         $imgUrl = strtolower(str_replace("&amp;", "&", $this->config['imgUrl']));
         //http开头验证
         if (strpos($imgUrl, "http") !== 0) {
@@ -44,12 +43,9 @@ class UploadCatch  extends Upload {
         );
         readfile($imgUrl, false, $context);
         $img = ob_get_contents();
-
         ob_end_clean();
 
         preg_match("/[\/]([^\/]*)[\.]?[^\.\/]*$/", $imgUrl, $m);
-
-
         $this->oriName = $m ? $m[1]:"";
         $this->fileSize = strlen($img);
         $this->fileType = $this->getFileExt();
@@ -64,48 +60,22 @@ class UploadCatch  extends Upload {
             return false;
         }
         
-        if(config('UEditorUpload.core.mode')=='local'){
-            //创建目录失败
-            if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
-                $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
-                return false;
-            } else if (!is_writeable($dirname)) {
-                $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
-                return false;
-            }
+        if(config('UEditorUpload.core.mode')=='aliyun-oss'){
 
-            //移动文件
-            if (!(file_put_contents($this->filePath, $img) && file_exists($this->filePath))) { //移动失败
-                $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
-                return false;
-            } else { //移动成功
-                $this->stateInfo = $this->stateMap[0];
-                return true;
-            }
-        }else if(config('UEditorUpload.core.mode')=='aliyun-oss'){
-
-        	$upload = $this->uploadContent($this->fullName, $img);
-        	if($upload) {
-        		$this->fullName = $upload;
+        	$path = OSSUtils::doUploadFs($img);
+        	if($path) {
+        		$this->fullName = config('fileuploads.aliyun-oss.ossPrefix') . $path;
         		$this->stateInfo = $this->stateMap[0];
         		return true;
-        	}else {
+        	} else {
         		$this->stateInfo = $this->getStateInfo("ERROR_UNKNOWN_MODE");
         		return false;
         	}
 
-        }else if(config('UEditorUpload.core.mode')=='qiniu'){
-
-            return $this->uploadQiniu($this->filePath,$img);
-
-        }else{
+        } else {
             $this->stateInfo = $this->getStateInfo("ERROR_UNKNOWN_MODE");
             return false;
         }
-
-
-
-
     }
 
     /**

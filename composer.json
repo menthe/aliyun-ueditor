@@ -18,7 +18,6 @@
   ],
 
   "require": {
-    "php": ">=5.4.0",
     "ext-fileinfo": "*",
     "illuminate/support": "5.*",
     "menthe/yuugames-aliyun-oss": "dev-develop"

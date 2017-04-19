@@ -1,6 +1,6 @@
 {
   "name": "menthe/aliyun-ueditor",
-  "description": "UEditor for laravel5. Support i18n. UEditor is a Rich Text Web Editor From Baidu.",
+  "description": "UEditor for laravel5 and Aliyun OSS.Store all images and files in Aliyun OSS. Support i18n. UEditor is a Rich Text Web Editor From Baidu.",
   "keywords": [
     "laravel",
     "ueditor",
@@ -18,11 +18,9 @@
   ],
 
   "require": {
-    "php": ">=5.4.0",
     "ext-fileinfo": "*",
     "illuminate/support": "5.*",
-    "johnlui/aliyun-oss": "^1.3",
-    "nesbot/carbon": "^1.21"
+    "menthe/yuugames-aliyun-oss": "dev-develop"
   },
   "autoload": {
     "psr-4": {

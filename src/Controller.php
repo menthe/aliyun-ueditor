@@ -6,24 +6,20 @@ use Illuminate\Http\Request;
 use Harris\UEditor\Uploader\UploadScrawl;
 use Harris\UEditor\Uploader\UploadFile;
 use Harris\UEditor\Uploader\UploadCatch;
-use Harris\UEditor\OSSUtils;
+use Harris\AliyunOSS\OSSUtils;
+use Illuminate\Support\Facades\Input;
 
 class Controller extends BaseController {
-
 
     public function __construct() {
 
     }
 
-
     public function server(Request $request) {
         $config = config('UEditorUpload.upload');
-
         $action = $request->get('action');
 
-
         switch ($action) {
-
             case 'config':
                 $result = $config;
                 break;
@@ -69,49 +65,33 @@ class Controller extends BaseController {
 
             /* 列出图片 */
             case 'listimage':
-
-
                 if (config('UEditorUpload.core.mode') == 'aliyun-oss') {
-                	$files = OSSUtils::getAllObjectUrls(config('UEditorUpload.core.aliyun-oss.ossBucket'), $config['imageManagerListPath']);
+                	$files = OSSUtils::getAllObjectUrls();
                 	$result = [
                 		"state" => "SUCCESS",
                 		"list" => $files,
                 		"start" => 0,
                 		"total" => count($files)
                 	];
-                } else if (config('UEditorUpload.core.mode') == 'qiniu') {
-                    $result = with(new ListsQiniu(
-                        $config['imageManagerAllowFiles'],
-                        $config['imageManagerListSize'],
-                        $config['imageManagerListPath'],
-                        $request))->getList();
-                }
-
+                } 
 
                 break;
             /* 列出文件 */
             case 'listfile':
                 if (config('UEditorUpload.core.mode') == 'aliyun-oss') {
-                    $files = OSSUtils::getAllObjectUrls(config('UEditorUpload.core.aliyun-oss.ossBucket'), $config['fileManagerListPath']);
+                    $files = OSSUtils::getAllObjectUrls();
                     $result = [
                     	"state" => "SUCCESS",
                     	"list" => $files,
                     	"start" => 0,
                     	"total" => count($files)
                     ];
-                } else if (config('UEditorUpload.core.mode') == 'qiniu') {
-                    $result = with(new ListsQiniu(
-                        $config['fileManagerAllowFiles'],
-                        $config['fileManagerListSize'],
-                        $config['fileManagerListPath'],
-                        $request))->getList();
                 }
-
+                
                 break;
 
             /* 抓取远程文件 */
             case 'catchimage':
-
                 $upConfig = array(
                     "pathFormat" => $config['catcherPathFormat'],
                     "maxSize" => $config['catcherMaxSize'],
@@ -120,7 +100,7 @@ class Controller extends BaseController {
                     'fieldName' => $config['catcherFieldName'],
                 );
 
-                $sources = \Input::get($upConfig['fieldName']);
+                $sources = Input::get($upConfig['fieldName']);
                 $list = [];
                 foreach ($sources as $imgUrl) {
                     $upConfig['imgUrl'] = $imgUrl;

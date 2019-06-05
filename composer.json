@@ -20,7 +20,7 @@
   "require": {
     "ext-fileinfo": "*",
     "illuminate/support": "5.*",
-    "menthe/yuugames-aliyun-oss": "v0.4"
+    "menthe/yuugames-aliyun-oss": "v0.5"
   },
   "autoload": {
     "psr-4": {

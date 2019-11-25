@@ -19,7 +19,7 @@
 
   "require": {
     "ext-fileinfo": "*",
-    "illuminate/support": "5.*",
+    "illuminate/support": "6.*",
     "menthe/yuugames-aliyun-oss": "dev-develop"
   },
   "autoload": {
